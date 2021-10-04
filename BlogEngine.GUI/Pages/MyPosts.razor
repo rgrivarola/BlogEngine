@@ -1,0 +1,36 @@
+﻿@page "/posts/user"
+
+@inject BackendService BackendService;
+@inherits PageBase
+@using BlogEngine.Core;
+<h1>My Posts</h1>
+
+<PageMessages @ref="Messages"></PageMessages>
+
+@if (AllMyPosts == null)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <div class="container-fluid">
+        @foreach (var Item in AllMyPosts)
+        {
+            <div class="row">
+                <div class="col">
+                    <h3>@Item.Title</h3>
+                    <p>By @Item.User.Login created at @Item.PublishedDate.ToShortDateString() (@(Item.Status != ePostStatus.Approved ? Item.Status.ToString() : ""))</p>
+                    <p>
+                        @Item.Content
+                    </p>
+
+                    <button class="btn btn-info" @onclick="@(x=> GUIBtnDetails_Click(Item.Id))">Details</button>
+                                                                               
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}

@@ -1,0 +1,55 @@
+﻿@page "/"
+
+@inject BackendService BackendService;
+@inherits PageBase
+@using BlogEngine.Core;
+<h1>Welcome to My Blog Engine</h1>
+
+<PageMessages @ref="Messages"></PageMessages>
+
+<h3>New post</h3>
+
+<div class="form-group">
+    <label for="txtPostTitle">Title</label>
+    <input id="txtPostTitle" class="form-control" @bind="NewPost.Title" />
+        
+</div>
+
+<div class="form-group">        
+        <textarea class="form-control" @bind="NewPost.Content">
+        </textarea>
+</div>
+
+<button class="btn btn-info" @onclick="GUIBtnSubmitPost_Click">Submit post</button>
+
+
+@if (AllPosts == null)
+{
+    <div>Loading...</div>
+}
+else
+{
+<div class="container-fluid">
+    @foreach (var Item in AllPosts)
+    {
+        <div class="row">
+            <div class="col">
+                <h3>@Item.Title</h3>
+                <p>By @Item.User.Login created at @Item.PublishedDate.ToShortDateString() (@(Item.Status != ePostStatus.Approved ? Item.Status.ToString() : ""))</p>
+                <p>
+                    @Item.Content
+                </p>
+
+                <button class="btn btn-info" @onclick="@(x=> GUIBtnDetails_Click(Item.Id))">Details</button>
+                                
+            </div>
+
+        </div>
+    }
+
+</div>
+}
+
+
+
+

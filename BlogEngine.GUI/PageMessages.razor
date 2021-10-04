@@ -1,0 +1,51 @@
+﻿
+<div class="alert-info">
+    <ul>
+        @foreach (var Item in InfoMessages)
+        {
+            <li>@Item</li>
+        }
+    </ul>
+</div>
+<div class="alert-warning">
+    <ul>
+        @foreach (var Item in WarningMessages)
+        {
+            <li>@Item</li>
+        }
+    </ul>
+</div>
+<div class="alert-danger">
+    <ul>
+        @foreach (var Item in ErrorMessages)
+        {
+            <li>@Item</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public List<string> ErrorMessages { get; set; }
+    [Parameter]
+    public List<string> WarningMessages { get; set; }
+    [Parameter]
+    public List<string> InfoMessages { get; set; }
+
+
+    public PageMessages()
+    {
+        InfoMessages = new List<string>();
+        WarningMessages = new List<string>();
+        ErrorMessages = new List<string>();
+
+
+    }
+
+    public void ClearAllMessages()
+    {
+        InfoMessages.Clear();
+        WarningMessages.Clear();
+        ErrorMessages.Clear();
+    }
+}

@@ -1,0 +1,71 @@
+﻿@page "/posts/{id}"
+@inherits PageBase
+@inject BackendService BackendService
+@using BlogEngine.Core;
+
+@if (Post == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+
+    <h3>@Post.Title</h3>
+
+    <p>By @Post.User.Login created at @Post.PublishedDate.ToShortDateString() (@(Post.Status != ePostStatus.Approved ? Post.Status.ToString() : ""))</p>
+
+    <p>
+        @Post.Content
+    </p>
+
+    
+        
+    @if (Post.Status == Core.ePostStatus.PendingApproval)
+    {
+
+
+        <div class="form-control">
+            <label for="txtReasonRejected">Reason for rejecting (only fill if rejected)</label>
+            <input id="txtReasonRejected" type="text" @bind="@TextReasonRejected" />
+        </div>
+
+        <button class="btn btn-info" @onclick="@(x=> GUIBtnChangePostStatus_Click(true))">Aproove</button>
+        <button class="btn btn-info" @onclick="@(x=> GUIBtnChangePostStatus_Click(false))">Reject</button>
+
+    }
+        
+        
+    
+
+    
+
+    <h3>@Post.Comments.Count Comments:</h3>
+
+    <div class="form-text">
+        <textarea @bind="@NewCommentText"></textarea>
+    </div>
+
+
+    <button class="btn btn-info" @onclick="GUIBtnPostComment_Click">Post a comment</button>
+
+    <div class="container-fluid">
+        @foreach (var Item in Post.Comments)
+        {
+            <div class="row">
+                <div class="col">
+                    @Item.User.Login says:
+                    <p>
+                        @Item.Text
+                    </p>
+
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+
+@code {
+
+}

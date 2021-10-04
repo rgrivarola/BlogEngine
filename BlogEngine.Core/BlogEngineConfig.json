@@ -1,0 +1,3 @@
+{
+  "ConnectionString": "Server=localhost;Database=BlogEngine;Trusted_Connection=True;"
+}
